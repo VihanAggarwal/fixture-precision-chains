@@ -1,0 +1,22 @@
+lineup_v8 (Colab, unified geometry-derived restore, learned diffusion policy, 10 seeds, tol 8 mm), 2026-09-12
+arm          N=2    N=4    N=8    steps/stage
+none_nohome  0/10   0/10   0/10   255
+home         7/10   0/10   0/10   291
+noop         9/10   0/10   0/10   711
+restore     10/10  10/10   6/10   662
+final-row success: restore 1.00/1.00/0.60; others 0 at N=4,8
+bounds: none_nohome <=0.509; home <=0.713; noop <=0.713 (lower 0.778 from N=2, i.e. decay not geometric); restore >=0.928 -> ACCEPT
+contrasts (McNemar exact, pooled over N; bootstrap CI):
+ home - none_nohome   success +0.23 [+0.10,+0.40]  discordant 7:0   p=0.0156   dev -19.6 mm
+ noop - home          success +0.07 [+0.00,+0.17]  discordant 2:0   p=0.5      dev  -4.2 mm
+ restore - noop       success +0.57 [+0.37,+0.77]  discordant 17:0  p=1.53e-05 dev -11.9 mm
+ restore - home       success +0.63 [+0.47,+0.80]  discordant 19:0  p=3.81e-06 dev -16.2 mm
+within-stage contraction (median dev after / dev at landing, landings > 2 mm):
+ none_nohome 1.000 (76) | home 1.000 (72) | noop 1.000 (75) | restore 0.206 (60)
+mean deviation per stage N=8 (mm):
+ none_nohome 3.1 28.9 46.3 46.2 62.9 109.4 112.5 155.6
+ home        2.5  9.8 22.3 32.8 38.6  48.0  45.4  73.4
+ noop        2.5  9.4 16.4 23.3 25.7  28.4  29.6  56.4
+ restore     1.7  1.2  1.4  1.5  1.8   4.0   5.8  12.0
+error recursion e(k+1)=a e(k)+b (N=8): restore a +0.80 [+0.60,+3.13] b 1.97 mm fixed point 9.8 mm [3.4,57.9];
+ home a +1.01; noop a +0.91; none_nohome a +0.57 b 46.7. Fit is noisy; use within-stage contraction as the headline.

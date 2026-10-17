@@ -1,0 +1,24 @@
+pack3x4_v1 (Colab, 3x4 block, N up to 12, learned diffusion policy trained on 3-row 2-D targets, 6 seeds, tol 8 mm), 2026-09-13
+arm      N=2   N=4   N=8   N=12  steps/stage
+none     0/6   0/6   0/6   0/6   291
+noop     0/6   0/6   0/6   0/6   712
+restore  6/6   6/6   4/6   0/6   679
+final-row success: restore 1.00 / 1.00 / 0.17 / 0.00; none and noop 0 everywhere
+bounds: none <=0.627; noop <=0.627; restore >=0.883 -> ACCEPT
+contrasts (McNemar exact pooled over N; bootstrap CI):
+ restore - none  success +0.67 [+0.46,+0.83]  discordant 16:0  p=3.05e-05  dev -14.4 mm [-17.1,-12.3]
+ restore - noop  success +0.67 [+0.46,+0.83]  discordant 16:0  p=3.05e-05  dev -13.9 mm [-16.2,-11.7]
+ noop - none     success +0.00                 discordant 0:0   p=1         dev  -0.5 mm [-2.7,+1.1]
+per-stage pattern (from sweep log): restore holds 1-8 mm per stage for ~8-9 stages; N=12 failures are 28-70 mm jumps in the
+last 3-4 stages (far row); N=8 per-stage ok 4/6 but final-row ok 1/6 because late far-row restores shove the finished block.
+Baselines sit ~20-30 mm and spike to 80-110 mm at the last stage.
+within-stage contraction (median dev after / dev at landing, landings > 2 mm):
+ none 0.999 (72) | noop 1.001 (72) | restore 0.387 (72)
+error recursion on N=12 (mm): none a +0.078 [-0.098,+0.556] b 25.9 fixed pt 28.1 | noop a -0.021 b 29.4 fixed pt 28.8 |
+ restore a +0.717 [+0.173,+1.162] b 4.33 fixed pt 15.3 [7.2,85.2]
+mean deviation per stage N=12 (mm):
+ none    4.1 17.0 20.6 24.6 12.7 25.0 42.8 18.1 17.6 19.9 29.9 74.7
+ noop    4.1 18.2 22.1 31.9 14.6 25.1 39.0 51.9 15.9 17.4 26.8 54.9
+ restore 4.2  3.9  3.4  3.3  5.9  5.1  5.1  8.2 11.0  9.4 35.9 24.8
+NOTE: in packing the bare chain does NOT compound (a about 0, flat ~20-30 mm per stage): each cube targets its nominal
+cell, so failure is per-stage placement error, and restore's gain there is per-stage correction, not arrested accumulation.

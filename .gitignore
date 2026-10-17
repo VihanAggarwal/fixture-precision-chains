@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+.venv*/
+*.log
+_*.json
+_pack_*
+*.npz
+# paper figure source renders are tracked on purpose
+!wrapper/paper/iclr/figs/renders/*.npz
+*.hdf5
+*.pth
+*.pt
+restoring_organs/restoring_colab.ipynb
+# run outputs live on the shared Drive; results belong in RESULTS.md as tables
+restoring_organs/plus/
+*.zip
+.env
+.DS_Store
+vendor/
